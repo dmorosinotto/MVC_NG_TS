@@ -1,0 +1,7 @@
+﻿@{
+    ViewBag.NUM = 2;
+}
+<div style="color: {{$ctrl.color}}">
+    Repeat {{$ctrl.what}} <input type="number" ng-model="$ctrl.num" style="width:50px" />-times!
+    <button ng-click="$ctrl.doRepeat($ctrl.num || ViewBag.NUM)">REPEAT</button>
+</div>

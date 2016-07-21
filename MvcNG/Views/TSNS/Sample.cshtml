@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Sample TS Namespace";
+}
+@section styles {
+    <style>
+        h2 { color: blue }
+    </style>
+}
+@section scripts {
+    <script src="bundle.js"></script>
+    @Html.Partial("DynInject")    
+}
+
+<h2>Index + DynInject</h2>
+<button id="btn"> Cliccami </button>

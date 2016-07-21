@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Sample TS Namespace";
+}
+@section styles {
+    <style>
+        h3 { color: green }
+    </style>
+}
+@section scripts {
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="bundle.js"></script>
+    @* DYNAMIC INJECTION OF CONSTANTS TO NG, READING VALUE FROM VIEWBAG *@
+    @Html.Partial("ngConstants")
+}
+
+<aside ng-app="myapp">
+    <div ng-controller="MainCtrl as vm">
+        <h3>External name: <input ng-model="vm.name"> {{vm.title + ' ' + vm.name}} </h3>
+        <hr />
+        <hello-world name="vm.name" on-changed="vm.show($event)"></hello-world>
+        <hr repeater-dir what="vm.name" on-repeat="vm.show($event)">
+    </div>
+</aside>

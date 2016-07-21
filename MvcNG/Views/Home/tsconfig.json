@@ -1,0 +1,11 @@
+﻿{
+    "compilerOptions": {
+        "target": "es5",
+        "outFile": "bundle.js",
+        "sourceMap": true
+    },
+    "files": [
+        "homeModule.ts",
+        "homeService.ts"
+    ]
+}
