@@ -49,9 +49,9 @@
                 });
 
                 $('#ConnID').click(function () {
-                    chat.server.ConnID().done(function (id) {
-                        window.alert("Your ConnectionID: \n" + id);
-                        console.log(chat.connection.id); //same value client-side
+                    chat.server.ConnID().done(function (ConnectionId) { //NOTE: remote call always return ASYNC!
+                        window.alert(ConnectionId===chat.connection.id ? 'Same ID' : 'DIFFERENT ID!?');
+                        console.log(ConnectionId, '===', chat.connection.id); //SAME value client-side!
                     });
                 });
             });

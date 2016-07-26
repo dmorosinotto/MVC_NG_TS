@@ -25,8 +25,9 @@ namespace SignalRChat
 
 
         [HubMethodName("ConnID")] // NOTE: Specify method name for client-side calling: <hub>.server.ConnID().done(...)
-        public Task<string> _ConnectionID() {
-            return Task.Run(() => Context.ConnectionId); //simulate async work, but client-side return is always promise 
+        public async Task<string> _ConnectionID() {
+            await Task.Delay(1000); //simulate async work
+            return Context.ConnectionId; // but client-side return is always promise 
         }
     }
 
