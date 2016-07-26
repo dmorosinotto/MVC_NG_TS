@@ -21,5 +21,10 @@ namespace MvcNG.Controllers
             return View();
         }
 
+        //
+        // GET: /Home/Chat - signalR sample
+        public ActionResult Chat() {
+            return View();
+        }
     }
 }
