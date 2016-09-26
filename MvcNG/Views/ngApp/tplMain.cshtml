@@ -1,0 +1,5 @@
+﻿<h3>External name: <input ng-model="vm.name"> {{vm.title + ' ' + vm.name}} </h3>
+<hr />
+<hello-world name="vm.name" on-changed="vm.show($event)"></hello-world>
+<hr repeater-dir what="vm.name" on-repeat="vm.show($event)">
+
