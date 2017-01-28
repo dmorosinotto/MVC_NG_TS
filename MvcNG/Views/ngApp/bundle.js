@@ -19,9 +19,9 @@ var MyApp;
                 this.log.log("notify $event->", this.name);
                 this.onChanged({ $event: this.name });
             };
-            Greeting.$inject = ["$log"];
             return Greeting;
         }());
+        Greeting.$inject = ["$log"];
         Components.helloWorld = {
             bindings: {
                 prefix: "@",
@@ -32,31 +32,6 @@ var MyApp;
             template: "<div><b>{{$ctrl.prefix || 'Hello'}}</b> <input ng-model=\"$ctrl.name\">\n                        <button ng-click=\"$ctrl.notify()\"> OK </button>\n                   </div>" //template string
         };
     })(Components = MyApp.Components || (MyApp.Components = {}));
-})(MyApp || (MyApp = {}));
-var MyApp;
-(function (MyApp) {
-    var Services;
-    (function (Services) {
-        var NameSvc = (function () {
-            function NameSvc($q, wait) {
-                this.$q = $q;
-                this.wait = wait;
-                this.wait = wait || 1000;
-            }
-            NameSvc.prototype._newValue = function (value) {
-                return { value: value };
-            };
-            NameSvc.prototype.getName = function () {
-                var _this = this;
-                var p = this.$q.defer();
-                setTimeout(function () { return p.resolve(_this._newValue("Pippo")); }, this.wait);
-                return p.promise;
-            };
-            NameSvc.$inject = ["$q", "WAIT"];
-            return NameSvc;
-        }());
-        Services.NameSvc = NameSvc;
-    })(Services = MyApp.Services || (MyApp.Services = {}));
 })(MyApp || (MyApp = {}));
 var MyApp;
 (function (MyApp) {
@@ -74,10 +49,10 @@ var MyApp;
         var MainCtrl = (function (_super) {
             __extends(MainCtrl, _super);
             function MainCtrl(svc) {
-                var _this = this;
-                _super.call(this, svc);
-                this.name = 'World...';
+                var _this = _super.call(this, svc) || this;
+                _this.name = 'World...';
                 svc.getName().then(function (n) { return _this.name = n.value; });
+                return _this;
             }
             MainCtrl.prototype.show = function ($event) {
                 if (typeof $event === "string") {
@@ -87,9 +62,9 @@ var MyApp;
                 else
                     window.alert(JSON.stringify($event));
             };
-            MainCtrl.$inject = ["NameSvc"];
             return MainCtrl;
         }(BaseCtrl));
+        MainCtrl.$inject = ["NameSvc"];
         Controllers.MainCtrl = MainCtrl;
     })(Controllers = MyApp.Controllers || (MyApp.Controllers = {}));
 })(MyApp || (MyApp = {}));
@@ -129,20 +104,44 @@ var MyApp;
         }());
     })(Directives = MyApp.Directives || (MyApp.Directives = {}));
 })(MyApp || (MyApp = {}));
-/// <reference path="components/GreetingCmp.ts" />
-/// <reference path="services/NameSvc.ts" />
-/// <reference path="controllers/MainCtrl.ts" />
-/// <reference path="directives/RepeaterDir.ts" />
-//var mod = angular.module("myapp", [])
-createModuleAndRegisterComponents("myapp", MyApp.Components)
+var MyApp;
+(function (MyApp) {
+    var Services;
+    (function (Services) {
+        var NameSvc = (function () {
+            function NameSvc($q, wait, name) {
+                this.$q = $q;
+                this.wait = wait;
+                this.name = name;
+                this.wait = wait || 1000;
+            }
+            NameSvc.prototype._newValue = function (value) {
+                return { value: value };
+            };
+            NameSvc.prototype.getName = function () {
+                var _this = this;
+                var p = this.$q.defer();
+                setTimeout(function () { return p.resolve(_this._newValue(_this.name)); }, this.wait);
+                return p.promise;
+            };
+            return NameSvc;
+        }());
+        NameSvc.$inject = ["$q", "WAIT", "NAME"];
+        Services.NameSvc = NameSvc;
+    })(Services = MyApp.Services || (MyApp.Services = {}));
+})(MyApp || (MyApp = {}));
+/// <reference path="services/namesvc.ts" />
+var mod = angular.module("myapp", [])
     .directive(MyApp.Directives)
     .controller(MyApp.Controllers)
-    .service(MyApp.Services);
-function createModuleAndRegisterComponents(modName, components, modDeps) {
-    if (modDeps === void 0) { modDeps = []; }
+    .service(MyApp.Services)
+    .component("helloWorld", MyApp.Components.helloWorld);
+/*
+function createModuleAndRegisterComponents(modName: string, components: {[comp:string]: angular.IComponentOptions}, modDeps: string[] = []): angular.IModule {
     // Helper function that create module and register all Components passed in the components objMap (seletor: CompOptions)
-    var mod = angular.module(modName, modDeps);
-    angular.forEach(components, function (options, name) { return mod.component(name, options); });
+    var mod = angular.module(modName, modDeps)
+    angular.forEach(components, (options,name) => mod.component(name, options));
     return mod;
 }
+*/
 //# sourceMappingURL=bundle.js.map

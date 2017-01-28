@@ -1,10 +1,11 @@
+/// <reference path="services/namesvc.ts" />
 
 var mod = angular.module("myapp", [])
 //createModuleAndRegisterComponents("myapp", <any>MyApp.Components)
     .directive(MyApp.Directives)
     .controller(MyApp.Controllers)
     .service(MyApp.Services)
-    .component("helloWorld",MyApp.Components.helloWorld
+    .component("helloWorld",MyApp.Components.helloWorld)
 ;
 
               
