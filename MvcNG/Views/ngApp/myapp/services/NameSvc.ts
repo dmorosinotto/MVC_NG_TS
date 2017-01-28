@@ -4,8 +4,8 @@ namespace MyApp.Services {
     }
 
     export class NameSvc {
-        static $inject = ["$q", "WAIT"];
-        constructor(private $q: angular.IQService, private wait: number) {
+        static $inject = ["$q", "WAIT", "NAME"];
+        constructor(private $q: angular.IQService, private wait: number, private name:string) {
             this.wait = wait || 1000;
         }   
 
@@ -15,7 +15,7 @@ namespace MyApp.Services {
         
         getName(): angular.IPromise<IData> {
             var p = this.$q.defer<IData>()
-            setTimeout(() => p.resolve( this._newValue("Pippo") ), this.wait);
+            setTimeout(() => p.resolve( this._newValue(this.name) ), this.wait);
             return p.promise;
         }     
     }
