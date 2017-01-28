@@ -1,11 +1,12 @@
-﻿{
+{
     "compilerOptions": {
         "target": "es5",
         "outFile": "bundle.js",
         "sourceMap": true
     },
-    "files": [
+    "include": [
       "myapp/main.ts",
+      "myapp/**/*.ts",
       "../../Scripts/typings/angularjs/angular.d.ts"
     ]
 }
